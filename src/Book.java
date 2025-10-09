@@ -1,26 +1,35 @@
-import java.util.ArrayList;
-import java.util.List;
+// Clasa Book
+public class Book {
+    // Câmp privat pentru titlu
+    private String title;
 
-public class Book extends Section {
-    private List<Author> authors = new ArrayList<>();
-
+    // Constructor
     public Book(String title) {
-        super(title);
+        this.title = title;
     }
 
-    public void addAuthor(Author a) {
-        authors.add(a);
+    // Metodă publică pentru a obține titlul
+    public String getTitle() {
+        return title;
     }
 
-    @Override
-    public void print() {
-        System.out.println("Book: " + getTitle());
-        System.out.println();
-        System.out.println("Authors:");
-        for (Author a : authors) {
-            a.print();
-        }
-        System.out.println();
-        super.print();
+    // Optional: metodă pentru a schimba titlul
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    // Metodă main pentru test
+    public static void main(String[] args) {
+        // Creăm un obiect Book
+        Book carte = new Book("Micul Prinț");
+
+        // Afișăm titlul folosind getTitle()
+        System.out.println("Titlul cărții este: " + carte.getTitle());
+
+        // Schimbăm titlul
+        carte.setTitle("Harry Potter");
+
+        // Afișăm din nou
+        System.out.println("Titlul actualizat este: " + carte.getTitle());
     }
 }

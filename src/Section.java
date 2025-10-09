@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class Section extends Element {
+public class Section implements Element {
     private String title;
     private List<Element> elements = new ArrayList<>();
 
@@ -9,18 +9,13 @@ public class Section extends Element {
         this.title = title;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    @Override
-    public void add(Element e) {
-        elements.add(e);
+    public void add(Element element) {
+        elements.add(element);
     }
 
     @Override
     public void print() {
-        System.out.println(title);
+        System.out.println("Section: " + title);
         for (Element e : elements) {
             e.print();
         }
