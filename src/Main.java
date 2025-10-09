@@ -1,15 +1,29 @@
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+        Book noapteBuna = new Book("Noapte buna, copii!");
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
-        }
+        Author rpGheo = new Author("Radu Pavel Gheo");
+        noapteBuna.addAuthor(rpGheo);
+
+        Section cap1 = new Section("Capitolul 1");
+        Section cap11 = new Section("Capitolul 1.1");
+        Section cap111 = new Section("Capitolul 1.1.1");
+        Section cap1111 = new Section("Subchapter 1.1.1.1");
+
+        noapteBuna.add(new Paragraph("Multumesc celor care ..."));
+        noapteBuna.add(cap1);
+
+        cap1.add(new Paragraph("Moto capitol"));
+        cap1.add(cap11);
+
+        cap11.add(new Paragraph("Text from subchapter 1.1"));
+        cap11.add(cap111);
+
+        cap111.add(new Paragraph("Text from subchapter 1.1.1"));
+        cap111.add(cap1111);
+
+        cap1111.add(new Image("Image subchapter 1.1.1.1"));
+
+        noapteBuna.print();
     }
 }
