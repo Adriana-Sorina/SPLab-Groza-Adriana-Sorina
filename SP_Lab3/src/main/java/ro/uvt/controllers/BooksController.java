@@ -1,47 +1,30 @@
 package ro.uvt.controllers;
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import ro.uvt.services.BooksService;
 import ro.uvt.models.Book;
-
-import java.util.List;
+import ro.uvt.persistence.BooksRepository;
+import ro.uvt.observer.AllBooksSubject;
 
 @RestController
 @RequestMapping("/books")
 public class BooksController {
 
-    @Autowired
-    private BooksService booksService;
+    private final BooksRepository booksRepository;
+    private final AllBooksSubject allBooksSubject;
 
-    @GetMapping
-    public ResponseEntity<List<Book>> getAll() {
-        return ResponseEntity.ok(booksService.getAllBooks());
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<Book> getById(@PathVariable Integer id) {
-        return booksService.getBookById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    public BooksController(BooksRepository booksRepository,
+                           AllBooksSubject allBooksSubject) {
+        this.booksRepository = booksRepository;
+        this.allBooksSubject = allBooksSubject;
     }
 
     @PostMapping
-    public ResponseEntity<Book> create(@RequestBody Book book) {
-        return ResponseEntity.ok(booksService.createBook(book));
-    }
+    public String newBook(@RequestBody Book bookRequest) {
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Book> update(@PathVariable Integer id, @RequestBody Book book) {
-        return booksService.updateBook(id, book)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
-    }
+        Book saved = booksRepository.save(bookRequest);
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Integer id) {
-        boolean deleted = booksService.deleteBook(id);
-        return deleted ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
+        allBooksSubject.add(saved);
+
+        return "Book saved [" + saved.getId() + "] " + saved.getTitle();
     }
 }

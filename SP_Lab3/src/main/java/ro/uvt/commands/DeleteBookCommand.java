@@ -7,7 +7,7 @@ import ro.uvt.services.BooksService;
 public class DeleteBookCommand implements Command {
 
     private final BooksService service;
-    private final Integer id; // <--- era Long, o facem Integer
+    private final Long id; // <-- corect, Long nu Integer
 
     @Override
     public Object execute() {

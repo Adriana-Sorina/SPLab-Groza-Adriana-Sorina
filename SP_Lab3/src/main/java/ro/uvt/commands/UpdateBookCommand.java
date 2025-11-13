@@ -8,7 +8,7 @@ import ro.uvt.services.BooksService;
 public class UpdateBookCommand implements Command {
 
     private final BooksService service;
-    private final Integer id;   // ← schimbat din Long în Integer
+    private final Long id;
     private final Book book;
 
     @Override

@@ -14,31 +14,32 @@ public class BooksService {
     @Autowired
     private BooksRepository booksRepository;
 
-    // ✅ Creează o carte nouă
+    // Creează o carte nouă
     public Book createBook(Book book) {
         return booksRepository.save(book);
     }
 
-    // ✅ Returnează toate cărțile
+    // Returnează toate cărțile
     public List<Book> getAllBooks() {
         return booksRepository.findAll();
     }
 
-    // ✅ Caută o carte după ID
-    public Optional<Book> getBookById(Integer id) {
-        return booksRepository.findById(id);
+    // Returnează o carte după ID — aici NU se folosește @PathVariable!!!
+    public Book getBook(Long id) {
+        return booksRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Book not found"));
     }
 
-    // ✅ Actualizează o carte existentă
-    public Optional<Book> updateBook(Integer id, Book newBook) {
+    // Actualizează o carte existentă
+    public Optional<Book> updateBook(Long id, Book newBook) {
         return booksRepository.findById(id).map(existing -> {
             newBook.setId(existing.getId());
             return booksRepository.save(newBook);
         });
     }
 
-    // ✅ Șterge o carte
-    public boolean deleteBook(Integer id) {
+    // Șterge o carte
+    public boolean deleteBook(Long id) {
         if (booksRepository.existsById(id)) {
             booksRepository.deleteById(id);
             return true;
